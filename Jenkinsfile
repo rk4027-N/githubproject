@@ -1,21 +1,31 @@
 pipeline {
-  agent none
-  stages {
-    stage('Back-end') {
-      agent {
-        docker { image 'maven:3.8.1-adoptopenjdk-11' }
-      }
-      steps {
-        sh 'mvn --version'
-      }
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout code from the repository
+                git 'https://github.com/your-repo/your-project.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Build the project
+                sh './gradlew build'
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run tests
+                sh './gradlew test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Deploy the application
+                sh './deploy.sh'
+            }
+        }
     }
-    stage('Front-end') {
-      agent {
-        docker { image 'node:16-alpine' }
-      }
-      steps {
-        sh 'node --version'
-      }
-    }
-  }
 }
+
