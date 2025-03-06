@@ -10,14 +10,14 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Build the project
-                sh './gradlew build'
+                // Build the project using Maven
+                sh 'mvn clean install'
             }
         }
         stage('Test') {
             steps {
                 // Run tests
-                sh './gradlew test'
+                sh 'mvn test'
             }
         }
         stage('Deploy') {
@@ -28,4 +28,3 @@ pipeline {
         }
     }
 }
-
